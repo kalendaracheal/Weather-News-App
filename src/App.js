@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
+import axios from 'axios'
 const api = {
-  key: "7d4ef5d23648c7c62acd3ccfa1a0a30b",
-  base: "https://api.openweathermap.org/data/2.5/"
+  key: "6f7d7d0b60f555edfd26071a742e2859",
+  base: "https://home.openweathermap.org/api_keys"
 }
 
-function App() {
-  const [query, setQuery] = useState('');
-  const [weather, setWeather] = useState({});
 
-  const search = evt => {
-    if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-        .then(res => res.json())
-        .then(result => {
-          setWeather(result);
-          setQuery('');
-          console.log(result);
-        });
+function App() {
+
+  const [data, setData] = useState({})
+  const [query, setQuery] = useState('')
+
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=895284fb2d2c50a520ea537456963d9c`
+
+  const search = (event) => {
+    if (event.key === 'Enter') {
+      axios.get(url).then((response) => {
+        setData(response.data)
+        console.log(response.data)
+      })
+      setQuery('')
     }
   }
 
@@ -33,29 +36,35 @@ function App() {
   }
 
   return (
-    <div className={(typeof weather.main != "undefined") ? ((weather.main.temp > 16) ? 'app warm' : 'app') : 'app'}>
+    <div className={(typeof data.main != "undefined") ? ((data.main.temp > 19) ? 'app warm' : 'app') : 'app'}>
       <main>
+        <div className='start'>
+        <div className='start-text'>Weather </div>
         <div className="search-box">
           <input 
             type="text"
             className="search-bar"
-            placeholder="Search..."
+            placeholder="Enter a location ..."
             onChange={e => setQuery(e.target.value)}
             value={query}
             onKeyPress={search}
           />
         </div>
-        {(typeof weather.main != "undefined") ? (
+
+        
+        </div>
+        
+        {(typeof data.main != "undefined") ? (
         <div>
           <div className="location-box">
-            <div className="location">{weather.name}, {weather.sys.country}</div>
+            <div className="location">{data.name}, {data.sys.country}</div>
             <div className="date">{dateBuilder(new Date())}</div>
           </div>
           <div className="weather-box">
             <div className="temp">
-              {Math.round(weather.main.temp)}°c
+              {Math.round(data.main.temp)}°C
             </div>
-            <div className="weather">{weather.weather[0].main}</div>
+            <div className="weather">{data.weather[0].main}</div>
           </div>
         </div>
         ) : ('')}
