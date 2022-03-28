@@ -115,5 +115,16 @@ main {
   font-weight: 700;
   font-size:xx-large;
   padding-left: 100px;
+  padding-right: 30px;
+ 
+}
+.img{
+  background-image: url('./assets/weather-logo.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.display{
+  display: flex;
+  justify-content:space-evenly;
   
 }
