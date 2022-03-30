@@ -29,8 +29,11 @@ function App() {
   const [data, setData] = useState({})
   const [query, setQuery] = useState('')
 
+  
+
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=895284fb2d2c50a520ea537456963d9c`
 
+  
   const search = (event) => {
     if (event.key === 'Enter') {
       axios.get(url).then((response) => {

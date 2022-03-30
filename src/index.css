@@ -128,3 +128,8 @@ main {
   justify-content:space-evenly;
   
 }
+.displaynews{
+  display: flex;
+  justify-content:space-evenly;
+  
+}
